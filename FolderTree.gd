@@ -23,3 +23,6 @@ func create(level):
 	
 	var subchild1 = self.create_item(child1)
 	subchild1.set_text(0, "Subchild1")
+	
+	var subchild2 = self.create_item(child2)
+	subchild2.set_text(0, "Subchild2")
