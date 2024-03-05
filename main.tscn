@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://s6sxwfrcp2xr"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_rsypr"]
+[ext_resource type="PackedScene" uid="uid://dqxjpxxvtg1jh" path="res://left_display.tscn" id="2_40uq8"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_rsypr")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Left Display" parent="HBoxContainer" instance=ExtResource("2_40uq8")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Right Display" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
