@@ -13,7 +13,7 @@ func _ready():
 func start():
 	
 	level = 5;
-	#left_display.tree_create(level);
+	left_display.tree_create(level);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
