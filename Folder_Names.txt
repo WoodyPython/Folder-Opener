@@ -1,0 +1,17 @@
+DEVICE0
+TSDDD
+SERVICES
+Print
+Control
+CurrentControlSet
+Fonts
+.DEFAULT
+Control Panel
+Environment
+EUDC
+Accessibility
+Appearance
+Colors
+Cursors
+Input Method
+International

@@ -13,13 +13,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Left Display" parent="HBoxContainer" instance=ExtResource("2_40uq8")]
+[node name="HSplitContainer" type="HSplitContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+split_offset = -100
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Left Display" parent="HBoxContainer/HSplitContainer/PanelContainer" instance=ExtResource("2_40uq8")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Right Display" type="PanelContainer" parent="HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer/HSplitContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Right Display" type="PanelContainer" parent="HBoxContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

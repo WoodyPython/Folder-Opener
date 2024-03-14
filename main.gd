@@ -12,18 +12,22 @@ func _ready():
 
 func start():
 	
-	level = 5;
+	level = 1;
 	left_display.tree_create(level);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	update_level_display(level);
+	update_level_display();
 	pass
 
 #checks for a key press, if esc then quits the game
 func _input(event):
 	if(event.is_action_pressed("esc")):
 		get_tree().quit();
+	if(event.is_action_pressed("newTree")):
+		level += 1;
+		update_level_display();
+		left_display.tree_create(level);
 
-func update_level_display(level):
+func update_level_display():
 	left_display.set_level(level);

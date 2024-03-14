@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dqxjpxxvtg1jh"]
+[gd_scene load_steps=4 format=3 uid="uid://dqxjpxxvtg1jh"]
 
 [ext_resource type="Script" path="res://LeftDisplay.gd" id="1_0j0bb"]
 [ext_resource type="Script" path="res://FolderTree.gd" id="2_hn658"]
+[ext_resource type="Script" path="res://ObjectiveList.gd" id="3_g4rw5"]
 
 [node name="Left Display" type="PanelContainer"]
 anchors_preset = 15
@@ -25,24 +26,82 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer"]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="HBoxContainer/PanelContainer2"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-horizontal_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
 layout_mode = 2
+vertical_scroll_mode = 0
+
+[node name="Margin Container" type="MarginContainer" parent="HBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_right = 7
+
+[node name="Directory Display" type="Label" parent="HBoxContainer/ScrollContainer/Margin Container"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+vertical_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="VSplitContainer" type="VSplitContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 30
+
+[node name="FolderTree" type="Tree" parent="HBoxContainer/VSplitContainer"]
+unique_name_in_owner = true
+z_as_relative = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
+theme_override_colors/parent_hl_line_color = Color(0.537255, 0.537255, 0.537255, 1)
+theme_override_colors/children_hl_line_color = Color(0.313726, 0.313726, 0.313726, 1)
+theme_override_constants/draw_relationship_lines = 2
+theme_override_constants/relationship_line_width = 2
+theme_override_constants/parent_hl_line_width = 2
+theme_override_constants/children_hl_line_width = 2
+theme_override_constants/parent_hl_line_margin = 2
+theme_override_constants/draw_guides = 0
+theme_override_constants/icon_max_width = 25
+allow_search = false
+enable_recursive_folding = false
+script = ExtResource("2_hn658")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/VSplitContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 
-[node name="FolderTree" type="Tree" parent="HBoxContainer/ScrollContainer"]
+[node name="ObjectiveList" type="VBoxContainer" parent="HBoxContainer/VSplitContainer/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-enable_recursive_folding = false
-script = ExtResource("2_hn658")
+script = ExtResource("3_g4rw5")
+
+[node name="HSeparator2" type="HSeparator" parent="HBoxContainer/VSplitContainer/ScrollContainer/ObjectiveList"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VSplitContainer/ScrollContainer/ObjectiveList"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Objectives"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VSplitContainer/ScrollContainer/ObjectiveList"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[connection signal="cell_selected" from="HBoxContainer/VSplitContainer/FolderTree" to="HBoxContainer/VSplitContainer/FolderTree" method="_on_cell_selected"]
+[connection signal="updateDirectory" from="HBoxContainer/VSplitContainer/FolderTree" to="." method="_on_folder_tree_update_directory"]

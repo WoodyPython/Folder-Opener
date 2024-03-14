@@ -1,0 +1,13 @@
+Software
+System
+Printers
+HKEY_CURRENT_CONFIG
+HKEY_USERS
+HKEY_LOCAL_MACHINE
+HKEY_CURRENT_USER
+HKEY_CLASSES_ROOT
+Console
+Keyboard Layout
+Desktop
+Keyboard
+Mouse
