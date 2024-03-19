@@ -5,7 +5,10 @@ extends Control
 @onready var objective_list = %ObjectiveList
 @onready var directory = %"Directory Display"
 
+var completedObjectives;
 var directoryName;
+
+signal nextLevel();
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,24 +17,34 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	update_objectives();
+	pass;
 
 
 func set_level(level):
 	level_display.text = "Level " + str(level);
 
 func tree_create(level):
+	completedObjectives = [];
 	tree.create(level);
 
-func update_objectives():
-	objective_list.update();
+
+func update_objectives(objectives):
+	objective_list.update(completedObjectives, objectives);
 
 
-func _on_folder_tree_update_directory(selected):
+func _on_folder_tree_update_directory(selected, objectives):
 	directoryName = "";
 
 	getDirectory(selected);
 	directory.set_text(directoryName);
+	
+	if(objectives.has(selected)):
+		if(!completedObjectives.has(selected)):
+			completedObjectives.append(selected);
+		update_objectives(objectives);
+		if(completedObjectives.size() == objectives.size()):
+			emit_signal("nextLevel");
+			
 	
 func getDirectory(selected):
 	if(selected == null):
@@ -41,3 +54,7 @@ func getDirectory(selected):
 	if(selected.get_parent() != null):
 		directoryName += "\\";
 	directoryName += str(selected.get_text(0));
+
+
+func _on_folder_tree_show_objectives(objectives):
+	update_objectives(objectives);

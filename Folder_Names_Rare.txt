@@ -11,3 +11,71 @@ Keyboard Layout
 Desktop
 Keyboard
 Mouse
+GameConfigStore
+Classes
+Google
+Intel
+Microsoft
+Nahimic
+Norton
+Policies
+MSI
+SystemCertificates
+Certificates
+Windows Security Health
+Windows Script
+Windows Defender
+Windows
+UserData
+Internet Explorer
+Input
+Edge
+Device Association Framework
+Cryptography
+AuthCookies
+Installed Components
+Driver and Support Assistant
+Chrome
+Local Settings
+Application
+DefaultIcon
+Shell
+Storage
+Hot Keys
+Schemes
+Keyboard Preference
+Keyboard Response
+MouseKeys
+TimeOut
+HARDWARE
+SECURITY
+SOFTWARE
+SYSTEM
+DriverDatabase
+HardwareConfig
+MountedDevices
+ResourceManager
+RNG
+ComputerIds
+ProductIds
+DriverFiles
+Hardware Profiles
+DEVICE0
+SERVICES
+DISPLAY
+HDAUDIO
+INTELAUDIO
+ROOT
+STORAGE
+USB
+USB4
+RADIO
+Device Parameters
+Properties
+Volume
+MEDIA
+Default_Monitor
+ConvertedDevice
+BitLocker
+BitlockerStatus
+CrashControl

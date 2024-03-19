@@ -1,6 +1,4 @@
-DEVICE0
 TSDDD
-SERVICES
 Print
 Control
 CurrentControlSet
@@ -15,3 +13,138 @@ Colors
 Cursors
 Input Method
 International
+Children
+Parents
+AppDataLow
+A-Volute
+CameraPipe
+Chromium
+Wow6432Node
+XeSDK
+Debug
+MSI HELP DESK
+Hotfix
+Live Update
+Notice
+CA
+Disallowed
+trust
+TrustedPeople
+TrustedPublisher
+CRLs
+CTLs
+Common Client
+NahimicAPO4
+Windows Script Host
+Windows NT
+TabletTip
+StigRegKey
+SQMClient
+Spelling
+Shared
+RAS AutoDial
+Office
+MPEG2Demultiplexer
+Lighting
+Java VM
+IME
+IdentityCRL
+Direct3D
+CTF
+Advanced INF Setup
+ActiveMovie
+Active Setup
+CLSID
+MrtCache
+MuiCache
+7c
+CurrentVersion
+AppContainer
+AppModel
+Launcher
+Activation
+UWARegAssociationInteropProgId
+open
+command
+Mappings
+BLBeacon
+15.0
+IMEJP
+MSIME
+DevModes2
+DevModePerUser
+ConvertUserDevModesCount
+Preload
+ShowToast
+Substitutes
+Toggle
+MuiCached
+WindowMetrics
+Blind Access
+HighContrast
+ShowSounds
+SlateLaunch
+SoundSentry
+StickyKeys
+ToggleKeys
+ActivationBroker
+ControlSet001
+Maps
+ResourcePolicyStore
+Select
+State
+WaaS
+Upfc
+TaskStore
+ResourceSets
+TierThresholds
+Registrars
+Immutable
+Break
+Buttons
+Current
+Nodes
+Enum
+HID
+HTREE
+PCI
+SCSI
+SW
+SWD
+UEFI
+IPP
+MSDAS
+MSRRAS
+PRINTENUM
+SGDEVAPI
+XvddEnum
+StorPort
+Partmgr
+ACPI_HAL
+BasicDisplay
+BasicRender
+CAD
+CompositeBus
+hvservice
+KDNIC
+mssmbios
+RDPBUS
+spaceport
+UMBUS
+vdrvroot
+VID
+volmgr
+0000
+WUDF
+0
+1
+ButtonConverter
+UEFI
+LogConf
+Affinity Policy
+ssps2
+WDF
+IntelTileDevice
+CI
+CMF
+Els

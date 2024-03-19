@@ -4,14 +4,15 @@ var noise = FastNoiseLite.new();
 var rng = RandomNumberGenerator.new();
 var maxLevel;
 var totalFolders;
+var objectives;
 
 @onready var nameFile = "res://Folder_Names.txt";
 @onready var nameFileRare = "res://Folder_Names_Rare.txt";
 var folderNames;
 var folderNamesRare;
 
-
-signal updateDirectory(selected);
+signal updateDirectory(selected, objectives);
+signal showObjectives(objectives);
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,7 +29,7 @@ func loadFile(file):
 	var newFile = FileAccess.open(file, FileAccess.READ);
 	var names = newFile.get_as_text();
 	var nameList = names.split("\n");
-	nameList.remove_at(nameList.size()-1)
+	nameList.remove_at(nameList.size()-1);
 	return nameList;
 	
 	
@@ -40,19 +41,30 @@ func create(level):
 	self.clear();
 	totalFolders = 0;
 	
+	level = ceil(log(level+1) / log(1.5));
+	
 	maxLevel = level;
-		
+
 	var root = self.create_item();
 	root.set_text(0, "Computer");
 	
 	appendTree(level, root, "flat");
-	root.set_collapsed_recursive(true);
-	root.select(0);
+	#root.set_collapsed_recursive(true);
+
 	self.scroll_to_item(root);
+	
+	root.set_icon(0, preload("res://Textures/ComputerIcon.png"));
+	
+	objectives = [];
+	var objCount = ceil(log(maxLevel+1) / log(2));
+	for i in objCount:
+		createObjective(root);
+	emit_signal("showObjectives", objectives);
+	root.select(0);
 	
 
 func appendTree(level, root, type):
-	if(totalFolders >= maxLevel * 5):
+	if(totalFolders >= maxLevel * 4):
 		return;
 	if(level <= 0):
 		return;
@@ -60,36 +72,41 @@ func appendTree(level, root, type):
 	#noise.seed = rng.randi_range(-9999, 9999);
 	var noiseValue = abs(noise.get_noise_1d(level));
 	#print(noiseValue);
-	var maxRange = round(noiseValue * 5 * (maxLevel - level + 2));
+	var maxRange = round(noiseValue * 4 * (maxLevel - level + 2));
 	
 	if(type == "flat"):
 		maxRange *= 1.3;
 	elif(type == "jab"):
-		maxRange *= 0.7;
+		maxRange *= 0.6;
 	
 	var repeatNum = rng.randi_range(1, maxRange);
 	if(type == "flat"):
 		repeatNum += 2;
 	elif(type == "staircase"):
 		repeatNum = 1;
+	
+	if(level + 1 >= maxLevel):
+		repeatNum += 1;
+	
 	#print(str(maxRange) + " " + str(repeatNum) + " " + type);
 	#repeatNum = clamp(repeatNum, 1, maxLevel/4+1);
+	if(repeatNum > 0):
+		totalFolders += 1;
 	
 	for i in repeatNum:
 		var child = self.create_item(root);
-		var icon = preload("res://icon.svg");
-
-		child.set_icon(0, icon);
-		totalFolders += 1;
+		child.get_parent().set_icon(0, preload("res://Textures/FolderIcon.png"));
+		child.set_icon(0, preload("res://Textures/FileIcon.png"));
+		
 		var moveOnChance = rng.randf_range(-1 * maxLevel, level);
 		if(level + 2 >= maxLevel):
 			moveOnChance += 0.8;
 		if(type == "flat"):
 			moveOnChance -= 0.2;
 		elif(type == "jab"):
-			moveOnChance += 0.4;
+			moveOnChance += 0.6;
 		elif(type == "staircase"):
-			moveOnChance += 0.5;
+			moveOnChance += 0.7;
 		var newType = getNewType(type);
 		
 		
@@ -99,15 +116,14 @@ func appendTree(level, root, type):
 			folderNamesRare = loadFile(nameFileRare);
 		
 		var usedfile = folderNames;
-		if(rng.randi_range(1, 20) == 1):
+		if(rng.randi_range(1, 20) == 1 || level == maxLevel):
 			usedfile = folderNamesRare;
 			moveOnChance = 1;
-
+		
 		
 		var index = randi() % usedfile.size();
 		child.set_text(0, usedfile[index]);
 		usedfile.remove_at(index);
-		
 		
 		if moveOnChance >= 0:
 			var saveLevel = false;
@@ -141,5 +157,13 @@ func getNewType(type):
 	
 	return newType;
 
+func createObjective(parent):
+	if(parent.get_child_count() == 0):
+		if(!objectives.has(parent)):
+			objectives.append(parent);
+		return;
+	
+	createObjective(parent.get_children().pick_random());
+
 func _on_cell_selected():
-	emit_signal("updateDirectory", get_selected());
+	emit_signal("updateDirectory", get_selected(), objectives);
