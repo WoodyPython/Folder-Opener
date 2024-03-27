@@ -4,7 +4,10 @@ var noise = FastNoiseLite.new();
 var rng = RandomNumberGenerator.new();
 var maxLevel;
 var totalFolders;
+var totalFiles;
+
 var objectives;
+var objNames = [];
 
 @onready var nameFile = "res://Folder_Names.txt";
 @onready var nameFileRare = "res://Folder_Names_Rare.txt";
@@ -20,9 +23,6 @@ func _ready():
 	noise.seed = rng.randi_range(-9999, 9999);
 	noise.fractal_octaves = 4;
 	noise.frequency = 1.0 / 10.0;
-	
-	folderNames = loadFile(nameFile);
-	folderNamesRare = loadFile(nameFileRare);
 	
 	
 func loadFile(file):
@@ -48,6 +48,18 @@ func create(level):
 	var root = self.create_item();
 	root.set_text(0, "Computer");
 	
+	totalFiles = [];
+	var objCount = ceil(log(maxLevel+1) / log(3));
+	objNames = [];
+	
+	folderNames = loadFile(nameFile);
+	folderNamesRare = loadFile(nameFileRare);
+	
+	for i in objCount:
+		var index = randi() % folderNames.size();
+		objNames.append(folderNames[index]);
+		folderNames.remove_at(index);
+	
 	appendTree(level, root, "flat");
 	#root.set_collapsed_recursive(true);
 
@@ -56,22 +68,20 @@ func create(level):
 	root.set_icon(0, preload("res://Textures/ComputerIcon.png"));
 	
 	objectives = [];
-	var objCount = ceil(log(maxLevel+1) / log(2));
 	for i in objCount:
-		createObjective(root);
+		createObjective();
 	emit_signal("showObjectives", objectives);
 	root.select(0);
 	
 
 func appendTree(level, root, type):
-	if(totalFolders >= maxLevel * 4):
+	if(totalFolders >= maxLevel * 5):
 		return;
 	if(level <= 0):
 		return;
 		
 	#noise.seed = rng.randi_range(-9999, 9999);
 	var noiseValue = abs(noise.get_noise_1d(level));
-	#print(noiseValue);
 	var maxRange = round(noiseValue * 4 * (maxLevel - level + 2));
 	
 	if(type == "flat"):
@@ -88,15 +98,16 @@ func appendTree(level, root, type):
 	if(level + 1 >= maxLevel):
 		repeatNum += 1;
 	
-	#print(str(maxRange) + " " + str(repeatNum) + " " + type);
 	#repeatNum = clamp(repeatNum, 1, maxLevel/4+1);
 	if(repeatNum > 0):
 		totalFolders += 1;
-	
+		totalFiles.erase(root);
+		
 	for i in repeatNum:
 		var child = self.create_item(root);
 		child.get_parent().set_icon(0, preload("res://Textures/FolderIcon.png"));
 		child.set_icon(0, preload("res://Textures/FileIcon.png"));
+		totalFiles.append(child);
 		
 		var moveOnChance = rng.randf_range(-1 * maxLevel, level);
 		if(level + 2 >= maxLevel):
@@ -112,9 +123,11 @@ func appendTree(level, root, type):
 		
 		if(folderNames.size() == 0):
 			folderNames = loadFile(nameFile);
+			for name in objNames:
+				folderNames.remove_at(folderNames.find(name));
 		if(folderNamesRare.size() == 0):
 			folderNamesRare = loadFile(nameFileRare);
-		
+
 		var usedfile = folderNames;
 		if(rng.randi_range(1, 20) == 1 || level == maxLevel):
 			usedfile = folderNamesRare;
@@ -157,13 +170,19 @@ func getNewType(type):
 	
 	return newType;
 
-func createObjective(parent):
-	if(parent.get_child_count() == 0):
-		if(!objectives.has(parent)):
-			objectives.append(parent);
+func createObjective():
+	if(totalFiles.is_empty()):
 		return;
+	var file = totalFiles.pick_random();
+	totalFiles.erase(file);
+	file.set_text(0, objNames.pop_front());
+	objectives.append(file);
 	
-	createObjective(parent.get_children().pick_random());
 
 func _on_cell_selected():
 	emit_signal("updateDirectory", get_selected(), objectives);
+
+
+func _on_item_activated():
+	get_selected().collapsed = !get_selected().collapsed;
+

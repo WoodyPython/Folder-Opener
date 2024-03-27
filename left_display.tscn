@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqxjpxxvtg1jh"]
+[gd_scene load_steps=5 format=3 uid="uid://dqxjpxxvtg1jh"]
 
 [ext_resource type="Script" path="res://LeftDisplay.gd" id="1_0j0bb"]
 [ext_resource type="Script" path="res://FolderTree.gd" id="2_hn658"]
 [ext_resource type="Script" path="res://ObjectiveList.gd" id="3_g4rw5"]
+[ext_resource type="Texture2D" uid="uid://c325fwhngiwgv" path="res://Textures/NotFound.png" id="4_bve7x"]
 
 [node name="Left Display" type="PanelContainer"]
 anchors_preset = 15
@@ -13,14 +14,14 @@ grow_vertical = 2
 size_flags_horizontal = 0
 script = ExtResource("1_0j0bb")
 
-[node name="HBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Level Display" type="Label" parent="HBoxContainer/PanelContainer"]
+[node name="Level Display" type="Label" parent="VBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -28,36 +29,37 @@ size_flags_vertical = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 layout_mode = 2
 vertical_scroll_mode = 0
 
-[node name="Margin Container" type="MarginContainer" parent="HBoxContainer/ScrollContainer"]
+[node name="Margin Container" type="MarginContainer" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_left = 7
 theme_override_constants/margin_right = 7
 
-[node name="Directory Display" type="Label" parent="HBoxContainer/ScrollContainer/Margin Container"]
+[node name="Directory Display" type="Label" parent="VBoxContainer/ScrollContainer/Margin Container"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 vertical_alignment = 1
 
-[node name="HSeparator2" type="HSeparator" parent="HBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="VSplitContainer" type="VSplitContainer" parent="HBoxContainer"]
+[node name="VSplitContainer" type="VSplitContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 split_offset = 30
 
-[node name="FolderTree" type="Tree" parent="HBoxContainer/VSplitContainer"]
+[node name="FolderTree" type="Tree" parent="VBoxContainer/VSplitContainer"]
 unique_name_in_owner = true
+z_as_relative = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -77,33 +79,29 @@ allow_search = false
 enable_recursive_folding = false
 script = ExtResource("2_hn658")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/VSplitContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ObjectiveList" type="VBoxContainer" parent="HBoxContainer/VSplitContainer/ScrollContainer"]
+[node name="ObjectiveList" type="VBoxContainer" parent="VBoxContainer/VSplitContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("3_g4rw5")
 
-[node name="HSeparator2" type="HSeparator" parent="HBoxContainer/VSplitContainer/ScrollContainer/ObjectiveList"]
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/VSplitContainer/ObjectiveList"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/VSplitContainer/ScrollContainer/ObjectiveList"]
+[node name="Label" type="Label" parent="VBoxContainer/VSplitContainer/ObjectiveList"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 text = "Objectives"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VSplitContainer/ScrollContainer/ObjectiveList"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/VSplitContainer/ObjectiveList"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="List" type="ItemList" parent="HBoxContainer/VSplitContainer/ScrollContainer/ObjectiveList"]
+[node name="List" type="ItemList" parent="VBoxContainer/VSplitContainer/ObjectiveList"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -115,6 +113,25 @@ same_column_width = true
 item_0/text = ""
 item_0/selectable = false
 
-[connection signal="cell_selected" from="HBoxContainer/VSplitContainer/FolderTree" to="HBoxContainer/VSplitContainer/FolderTree" method="_on_cell_selected"]
-[connection signal="showObjectives" from="HBoxContainer/VSplitContainer/FolderTree" to="." method="_on_folder_tree_show_objectives"]
-[connection signal="updateDirectory" from="HBoxContainer/VSplitContainer/FolderTree" to="." method="_on_folder_tree_update_directory"]
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer/VSplitContainer/ObjectiveList"]
+layout_mode = 2
+
+[node name="LevelCompleteBtn" type="Button" parent="VBoxContainer/VSplitContainer/ObjectiveList"]
+unique_name_in_owner = true
+clip_contents = true
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_constants/icon_max_width = 30
+theme_override_font_sizes/font_size = 20
+disabled = true
+text = "Click to Level Up!"
+icon = ExtResource("4_bve7x")
+icon_alignment = 1
+vertical_icon_alignment = 2
+expand_icon = true
+
+[connection signal="cell_selected" from="VBoxContainer/VSplitContainer/FolderTree" to="VBoxContainer/VSplitContainer/FolderTree" method="_on_cell_selected"]
+[connection signal="item_activated" from="VBoxContainer/VSplitContainer/FolderTree" to="VBoxContainer/VSplitContainer/FolderTree" method="_on_item_activated"]
+[connection signal="showObjectives" from="VBoxContainer/VSplitContainer/FolderTree" to="." method="_on_folder_tree_show_objectives"]
+[connection signal="updateDirectory" from="VBoxContainer/VSplitContainer/FolderTree" to="." method="_on_folder_tree_update_directory"]
+[connection signal="pressed" from="VBoxContainer/VSplitContainer/ObjectiveList/LevelCompleteBtn" to="." method="_on_level_complete_btn_pressed"]

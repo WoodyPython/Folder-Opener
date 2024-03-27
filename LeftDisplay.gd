@@ -42,8 +42,6 @@ func _on_folder_tree_update_directory(selected, objectives):
 		if(!completedObjectives.has(selected)):
 			completedObjectives.append(selected);
 		update_objectives(objectives);
-		if(completedObjectives.size() == objectives.size()):
-			emit_signal("nextLevel");
 			
 	
 func getDirectory(selected):
@@ -58,3 +56,8 @@ func getDirectory(selected):
 
 func _on_folder_tree_show_objectives(objectives):
 	update_objectives(objectives);
+
+
+
+func _on_level_complete_btn_pressed():
+	emit_signal("nextLevel");

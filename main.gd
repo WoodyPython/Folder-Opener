@@ -1,9 +1,16 @@
 extends Node
 
 var level;
+var bits;
+var shake = 0.0;
+@export var RANDOM_SHAKE_STRENGTH = 30.0;
+@export var SHAKE_DECAY = 5.0;
 
-@onready var left_display = %"Left Display"
+@onready var left_display = %"Left Display";
+@onready var right_display  = %"Right Display";
+@onready var camera = %Camera;
 
+@onready var rand = RandomNumberGenerator.new();
 
 
 # Called when the node enters the scene tree for the first time.
@@ -13,12 +20,16 @@ func _ready():
 func start():
 	
 	level = 1;
+	bits = 0;
 	left_display.tree_create(level);
+	right_display.display_bits(bits);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	update_level_display();
-	#pass
+	
+	shake = lerp(shake, 0.0, SHAKE_DECAY * delta);
+	camera.offset = get_random_offset();
 
 #checks for a key press, if esc then quits the game
 func _input(event):
@@ -29,12 +40,24 @@ func _input(event):
 
 func update_level_display():
 	left_display.set_level(level);
+	right_display.display_bits(bits);
 
 func nextLevel():
+	bits += level;
 	level += 1;
 	update_level_display();
 	left_display.tree_create(level);
+	
+	camera_shake(1);
 
 
 func _on_left_display_next_level():
 	call_deferred("nextLevel");
+
+#resets the shake value, causing screen to shake again
+func camera_shake(percent):
+	shake = RANDOM_SHAKE_STRENGTH * percent;
+
+#gets the random offset based on current shake	
+func get_random_offset():
+	return Vector2(rand.randf_range(-shake, shake), rand.randf_range(-shake, shake));

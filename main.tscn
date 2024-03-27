@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://s6sxwfrcp2xr"]
+[gd_scene load_steps=4 format=3 uid="uid://s6sxwfrcp2xr"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_rsypr"]
 [ext_resource type="PackedScene" uid="uid://dqxjpxxvtg1jh" path="res://left_display.tscn" id="2_40uq8"]
+[ext_resource type="PackedScene" uid="uid://c4wieuvlxnlob" path="res://right_display.tscn" id="3_1p2qf"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_rsypr")
@@ -32,9 +33,12 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="Right Display" type="PanelContainer" parent="HBoxContainer/HSplitContainer"]
+[node name="Right Display" parent="HBoxContainer/HSplitContainer" instance=ExtResource("3_1p2qf")]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+
+[node name="Camera" type="Camera2D" parent="."]
+unique_name_in_owner = true
+anchor_mode = 0
 
 [connection signal="nextLevel" from="HBoxContainer/HSplitContainer/PanelContainer/Left Display" to="." method="_on_left_display_next_level"]

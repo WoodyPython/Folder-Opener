@@ -31,7 +31,6 @@ Internet Explorer
 Input
 Edge
 Device Association Framework
-Cryptography
 AuthCookies
 Installed Components
 Driver and Support Assistant
