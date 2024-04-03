@@ -48,7 +48,7 @@ func nextLevel():
 	update_level_display();
 	left_display.tree_create(level);
 	
-	camera_shake(1);
+	camera_shake(2);
 
 
 func _on_left_display_next_level():
@@ -61,3 +61,7 @@ func camera_shake(percent):
 #gets the random offset based on current shake	
 func get_random_offset():
 	return Vector2(rand.randf_range(-shake, shake), rand.randf_range(-shake, shake));
+
+
+func _on_left_display_screen_shake(percent):
+	camera_shake(percent);

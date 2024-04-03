@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4wieuvlxnlob"]
+[gd_scene load_steps=4 format=3 uid="uid://c4wieuvlxnlob"]
 
 [ext_resource type="Script" path="res://RightDisplay.gd" id="1_hpkwl"]
+[ext_resource type="Script" path="res://UpgradeGrid.gd" id="2_qncru"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ll6c7"]
 
 [node name="Right Display" type="PanelContainer"]
 anchors_preset = 15
@@ -47,4 +50,53 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+vertical_scroll_mode = 0
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_ll6c7")
+clip_tabs = false
+all_tabs_in_front = true
+
+[node name="Upgrades" type="MenuButton" parent="VBoxContainer/ScrollContainer/TabContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/ScrollContainer/TabContainer/Upgrades"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 4.0
+grow_horizontal = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/ScrollContainer/TabContainer/Upgrades"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UpgradeGrid" type="GridContainer" parent="VBoxContainer/ScrollContainer/TabContainer/Upgrades/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 3
+script = ExtResource("2_qncru")
+
+[node name="File Contents" type="MenuButton" parent="VBoxContainer/ScrollContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Settings" type="MenuButton" parent="VBoxContainer/ScrollContainer/TabContainer"]
+visible = false
 layout_mode = 2

@@ -12,7 +12,7 @@ var newsSpeed;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	newsList = ["This is a message...", "Testing Testing", "Hello!"];
+	newsList = ["This is a message...", "Testing Testing", "Hello!", ":o"];
 	newsTextI = -500;
 	pickNews();
 

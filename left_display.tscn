@@ -1,9 +1,51 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqxjpxxvtg1jh"]
+[gd_scene load_steps=10 format=3 uid="uid://dqxjpxxvtg1jh"]
 
 [ext_resource type="Script" path="res://LeftDisplay.gd" id="1_0j0bb"]
 [ext_resource type="Script" path="res://FolderTree.gd" id="2_hn658"]
 [ext_resource type="Script" path="res://ObjectiveList.gd" id="3_g4rw5"]
 [ext_resource type="Texture2D" uid="uid://c325fwhngiwgv" path="res://Textures/NotFound.png" id="4_bve7x"]
+[ext_resource type="Texture2D" uid="uid://c8ca0ehb7iriu" path="res://Textures/Found.png" id="5_lilca"]
+[ext_resource type="Texture2D" uid="uid://dmwkm3jt3smhd" path="res://Textures/Gear.png" id="6_iavdn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h1bdl"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iiodi"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+initial_velocity_min = 110.05
+initial_velocity_max = 587.92
+angular_velocity_min = -305.84
+angular_velocity_max = 144.62
+orbit_velocity_min = -0.051
+orbit_velocity_max = 0.177
+gravity = Vector3(0, 98, 0)
+scale_min = 0.0
+scale_max = 0.05
+hue_variation_min = -0.04
+hue_variation_max = 0.13
+turbulence_noise_strength = 0.0
+turbulence_noise_scale = 0.0
+turbulence_noise_speed_random = 0.39
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xl1up"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 66.37
+initial_velocity_max = 128.32
+angular_velocity_min = 8.87
+angular_velocity_max = 123.56
+gravity = Vector3(0, 98, 0)
+scale_min = 0.02
+scale_max = 0.05
+color = Color(0.886275, 0.980392, 0.956863, 1)
+hue_variation_min = -0.1
+hue_variation_max = -0.01
+turbulence_enabled = true
+turbulence_influence_min = 0.0
 
 [node name="Left Display" type="PanelContainer"]
 anchors_preset = 15
@@ -106,6 +148,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/icon_margin = 5
+theme_override_styles/focus = SubResource("StyleBoxEmpty_h1bdl")
 allow_search = false
 text_overrun_behavior = 0
 item_count = 1
@@ -129,6 +172,37 @@ icon = ExtResource("4_bve7x")
 icon_alignment = 1
 vertical_icon_alignment = 2
 expand_icon = true
+
+[node name="LvlCompleteParticles" type="GPUParticles2D" parent="VBoxContainer/VSplitContainer/ObjectiveList/LevelCompleteBtn"]
+unique_name_in_owner = true
+position = Vector2(-16, 35)
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_iiodi")
+texture = ExtResource("5_lilca")
+lifetime = 15.0
+one_shot = true
+speed_scale = 3.44
+explosiveness = 1.0
+randomness = 0.31
+fixed_fps = 60
+visibility_rect = Rect2(-50, -50, 100, 100)
+trail_enabled = true
+trail_lifetime = 0.5
+
+[node name="ObjectiveParticles" type="GPUParticles2D" parent="VBoxContainer/VSplitContainer"]
+unique_name_in_owner = true
+emitting = false
+amount = 5
+process_material = SubResource("ParticleProcessMaterial_xl1up")
+texture = ExtResource("6_iavdn")
+lifetime = 2.5
+one_shot = true
+speed_scale = 2.36
+explosiveness = 0.89
+randomness = 0.33
+fixed_fps = 60
+trail_lifetime = 0.64
 
 [connection signal="cell_selected" from="VBoxContainer/VSplitContainer/FolderTree" to="VBoxContainer/VSplitContainer/FolderTree" method="_on_cell_selected"]
 [connection signal="item_activated" from="VBoxContainer/VSplitContainer/FolderTree" to="VBoxContainer/VSplitContainer/FolderTree" method="_on_item_activated"]

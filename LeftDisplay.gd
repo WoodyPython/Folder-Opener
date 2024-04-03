@@ -4,11 +4,16 @@ extends Control
 @onready var tree = %FolderTree
 @onready var objective_list = %ObjectiveList
 @onready var directory = %"Directory Display"
+@onready var completeParticles = %LvlCompleteParticles
+@onready var objectiveParticles = %ObjectiveParticles
 
 var completedObjectives;
 var directoryName;
 
+var rng = RandomNumberGenerator.new();
+
 signal nextLevel();
+signal screenShake(percent);
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -40,6 +45,14 @@ func _on_folder_tree_update_directory(selected, objectives):
 	
 	if(objectives.has(selected)):
 		if(!completedObjectives.has(selected)):
+			objectiveParticles.position = get_viewport().get_mouse_position();
+			objectiveParticles.position.y -= 100;
+			objectiveParticles.amount = rng.randi_range(4, 7);
+			objectiveParticles.emitting = true;
+			objectiveParticles.restart();
+			
+			emit_signal("screenShake", 0.5);
+			
 			completedObjectives.append(selected);
 		update_objectives(objectives);
 			
@@ -60,4 +73,6 @@ func _on_folder_tree_show_objectives(objectives):
 
 
 func _on_level_complete_btn_pressed():
+	completeParticles.emitting = true;
+	completeParticles.restart();
 	emit_signal("nextLevel");

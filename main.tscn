@@ -42,3 +42,4 @@ unique_name_in_owner = true
 anchor_mode = 0
 
 [connection signal="nextLevel" from="HBoxContainer/HSplitContainer/PanelContainer/Left Display" to="." method="_on_left_display_next_level"]
+[connection signal="screenShake" from="HBoxContainer/HSplitContainer/PanelContainer/Left Display" to="." method="_on_left_display_screen_shake"]

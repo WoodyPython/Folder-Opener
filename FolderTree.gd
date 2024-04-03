@@ -61,7 +61,7 @@ func create(level):
 		folderNames.remove_at(index);
 	
 	appendTree(level, root, "flat");
-	#root.set_collapsed_recursive(true);
+	root.set_collapsed_recursive(true);
 
 	self.scroll_to_item(root);
 	
