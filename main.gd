@@ -3,6 +3,8 @@ extends Node
 var level;
 var bits;
 var shake = 0.0;
+var upgradeList = [];
+
 @export var RANDOM_SHAKE_STRENGTH = 30.0;
 @export var SHAKE_DECAY = 5.0;
 
@@ -20,7 +22,7 @@ func _ready():
 func start():
 	
 	level = 1;
-	bits = 0;
+	bits = 1000;
 	left_display.tree_create(level);
 	right_display.display_bits(bits);
 
@@ -65,3 +67,12 @@ func get_random_offset():
 
 func _on_left_display_screen_shake(percent):
 	camera_shake(percent);
+
+func getBits():
+	return bits;
+
+func removeBits(remove):
+	bits -= remove;
+	
+func addUpgrade(id):
+	upgradeList.append(id);

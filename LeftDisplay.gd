@@ -51,6 +51,8 @@ func _on_folder_tree_update_directory(selected, objectives):
 			objectiveParticles.emitting = true;
 			objectiveParticles.restart();
 			
+			selected.set_icon(0, preload("res://Textures/Found.png"));
+			
 			emit_signal("screenShake", 0.5);
 			
 			completedObjectives.append(selected);

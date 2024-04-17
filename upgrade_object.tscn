@@ -3,51 +3,80 @@
 [ext_resource type="Script" path="res://UpgradeObject.gd" id="1_gwvu2"]
 
 [node name="UpgradeObject" type="PanelContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+show_behind_parent = true
+z_as_relative = false
+custom_minimum_size = Vector2(200, 125)
+anchors_preset = -1
+anchor_right = 0.333333
+anchor_bottom = 0.395062
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 1
 script = ExtResource("1_gwvu2")
+metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="OutlineColor" type="ReferenceRect" parent="."]
+unique_name_in_owner = true
+clip_contents = true
 layout_mode = 2
+mouse_filter = 2
+border_color = Color(0.45098, 0.545098, 0.65098, 1)
+border_width = 2.0
+editor_only = false
 
-[node name="Title" type="Label" parent="VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 15
 text = "Upgrade Title"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+mouse_filter = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
-[node name="Description" type="Label" parent="VBoxContainer/PanelContainer"]
+[node name="Description" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 10
 text = "Upgrade Description."
 autowrap_mode = 1
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 8
+theme_override_constants/separation = -1
 
-[node name="Cost" type="Label" parent="VBoxContainer"]
+[node name="Cost" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 16
 text = "Cost: 100"
 horizontal_alignment = 1
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="gui_input" from="MarginContainer/VBoxContainer/PanelContainer" to="." method="_on_panel_container_gui_input"]

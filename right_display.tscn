@@ -52,12 +52,7 @@ vertical_alignment = 1
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-vertical_scroll_mode = 0
-
-[node name="TabContainer" type="TabContainer" parent="VBoxContainer/ScrollContainer"]
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -65,26 +60,23 @@ theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_ll6c7")
 clip_tabs = false
 all_tabs_in_front = true
 
-[node name="Upgrades" type="MenuButton" parent="VBoxContainer/ScrollContainer/TabContainer"]
+[node name="Upgrades" type="PanelContainer" parent="VBoxContainer/TabContainer"]
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/ScrollContainer/TabContainer/Upgrades"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 4.0
-grow_horizontal = 2
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/TabContainer/Upgrades"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/ScrollContainer/TabContainer/Upgrades"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 3.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TabContainer/Upgrades"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
 
-[node name="UpgradeGrid" type="GridContainer" parent="VBoxContainer/ScrollContainer/TabContainer/Upgrades/ScrollContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TabContainer/Upgrades/MarginContainer"]
+layout_mode = 2
+
+[node name="UpgradeGrid" type="GridContainer" parent="VBoxContainer/TabContainer/Upgrades/MarginContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -93,10 +85,10 @@ theme_override_constants/v_separation = 5
 columns = 3
 script = ExtResource("2_qncru")
 
-[node name="File Contents" type="MenuButton" parent="VBoxContainer/ScrollContainer/TabContainer"]
+[node name="File Contents" type="MenuButton" parent="VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Settings" type="MenuButton" parent="VBoxContainer/ScrollContainer/TabContainer"]
+[node name="Settings" type="MenuButton" parent="VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
