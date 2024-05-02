@@ -28,6 +28,7 @@ func _process(delta):
 	if(newsTextI >= 1500):
 		pickNews();
 		newsTextI = -500;
+	
 
 
 func display_bits(bits):

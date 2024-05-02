@@ -4,6 +4,7 @@ var level;
 var bits;
 var shake = 0.0;
 var upgradeList = [];
+var levelTime = 0;
 
 @export var RANDOM_SHAKE_STRENGTH = 30.0;
 @export var SHAKE_DECAY = 5.0;
@@ -20,9 +21,8 @@ func _ready():
 	start();
 
 func start():
-	
 	level = 1;
-	bits = 1000;
+	bits = 9999;
 	left_display.tree_create(level);
 	right_display.display_bits(bits);
 
@@ -32,6 +32,8 @@ func _process(delta):
 	
 	shake = lerp(shake, 0.0, SHAKE_DECAY * delta);
 	camera.offset = get_random_offset();
+	
+	levelTime += delta;
 
 #checks for a key press, if esc then quits the game
 func _input(event):
@@ -45,12 +47,26 @@ func update_level_display():
 	right_display.display_bits(bits);
 
 func nextLevel():
-	bits += level;
+	var totalGain = level;
+	
+	if(upgradeList.has("n3")):
+		totalGain += 1;
+		
+	if(upgradeList.has("n9")):
+		var multi = 5/levelTime + 1;
+		totalGain *= multi;
+		totalGain = round(totalGain);
+		
+	grantBits(totalGain);
+	
 	level += 1;
+	if(upgradeList.has("n7")):
+		level += 1;
 	update_level_display();
 	left_display.tree_create(level);
 	
 	camera_shake(2);
+	levelTime = 0;
 
 
 func _on_left_display_next_level():
@@ -76,3 +92,11 @@ func removeBits(remove):
 	
 func addUpgrade(id):
 	upgradeList.append(id);
+
+func getUpgrades():
+	return upgradeList;
+
+func grantBits(gain):
+	if(upgradeList.has("n6")):
+		gain *= 2;
+	bits += gain;

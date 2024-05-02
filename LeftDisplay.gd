@@ -7,8 +7,10 @@ extends Control
 @onready var completeParticles = %LvlCompleteParticles
 @onready var objectiveParticles = %ObjectiveParticles
 
+@onready var main = get_tree().root.get_child(0);
 var completedObjectives;
 var directoryName;
+
 
 var rng = RandomNumberGenerator.new();
 
@@ -17,7 +19,7 @@ signal screenShake(percent);
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	pass;
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -45,17 +47,20 @@ func _on_folder_tree_update_directory(selected, objectives):
 	
 	if(objectives.has(selected)):
 		if(!completedObjectives.has(selected)):
-			objectiveParticles.position = get_viewport().get_mouse_position();
-			objectiveParticles.position.y -= 100;
-			objectiveParticles.amount = rng.randi_range(4, 7);
-			objectiveParticles.emitting = true;
-			objectiveParticles.restart();
+			if(main.getUpgrades().has("n4")):
+				main.grantBits(1);
+				objectiveParticles.position = get_viewport().get_mouse_position();
+				objectiveParticles.position.y -= 100;
+				objectiveParticles.amount = rng.randi_range(4, 7);
+				objectiveParticles.emitting = true;
+				objectiveParticles.restart();
 			
 			selected.set_icon(0, preload("res://Textures/Found.png"));
 			
 			emit_signal("screenShake", 0.5);
 			
 			completedObjectives.append(selected);
+			
 		update_objectives(objectives);
 			
 	

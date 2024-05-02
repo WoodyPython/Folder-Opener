@@ -34,6 +34,11 @@ layout_mode = 2
 size_flags_horizontal = 8
 theme_override_constants/separation = -1
 
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/HSplitContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3

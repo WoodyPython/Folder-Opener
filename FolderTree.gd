@@ -6,11 +6,17 @@ var maxLevel;
 var totalFolders;
 var totalFiles;
 
+var secondCount = 0;
+var autoOpenInterval = 5;
+
 var objectives;
 var objNames = [];
+var foldersList = [];
 
 @onready var nameFile = "res://Folder_Names.txt";
 @onready var nameFileRare = "res://Folder_Names_Rare.txt";
+@onready var main = get_tree().root.get_child(0);
+
 var folderNames;
 var folderNamesRare;
 
@@ -35,14 +41,35 @@ func loadFile(file):
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass;
+	if(main.getUpgrades().has("i3")):
+		secondCount += delta;
+		if(secondCount >= autoOpenInterval):
+			secondCount = 0;
+			if(main.getUpgrades().has("i6")):
+				autoOpenInterval *= 0.9;
+			var validFolders = [];
+			for folder in foldersList:
+				if(folder.get_parent() == null && folder.collapsed):
+					validFolders.append(folder);
+					continue;
+				if(folder.collapsed && !folder.get_parent().collapsed):
+					validFolders.append(folder);
+			
+			if(!validFolders.is_empty()):
+				var choosenFolder = validFolders.pick_random();
+				choosenFolder.collapsed = false;
 
 func create(level):
 	self.clear();
+	autoOpenInterval = 5;
+	secondCount = 0;
 	totalFolders = 0;
+	foldersList = [];
+	var scaling = 1.5;
 	
-	level = ceil(log(level+1) / log(1.5));
-	
+	if(main.getUpgrades().has("n2")):
+		scaling += 0.15;
+	level = ceil(log(level+1) / log(scaling));
 	maxLevel = level;
 
 	var root = self.create_item();
@@ -50,6 +77,12 @@ func create(level):
 	
 	totalFiles = [];
 	var objCount = ceil(log(maxLevel+1) / log(3));
+	if(rng.randi_range(0, 2) == 0):
+		objCount-=1;
+	elif(rng.randi_range(0, 2) == 0):
+		objCount+=1;
+	objCount = max(objCount, 1);
+	
 	objNames = [];
 	
 	folderNames = loadFile(nameFile);
@@ -73,6 +106,8 @@ func create(level):
 	emit_signal("showObjectives", objectives);
 	root.select(0);
 	
+	if(main.getUpgrades().has("i2")):
+		root.collapsed = false;
 
 func appendTree(level, root, type):
 	if(totalFolders >= maxLevel * 5):
@@ -108,6 +143,7 @@ func appendTree(level, root, type):
 		child.get_parent().set_icon(0, preload("res://Textures/FolderIcon.png"));
 		child.set_icon(0, preload("res://Textures/FileIcon.png"));
 		totalFiles.append(child);
+		foldersList.append(child.get_parent());
 		
 		var moveOnChance = rng.randf_range(-1 * maxLevel, level);
 		if(level + 2 >= maxLevel):
@@ -123,8 +159,8 @@ func appendTree(level, root, type):
 		
 		if(folderNames.size() == 0):
 			folderNames = loadFile(nameFile);
-			for name in objNames:
-				folderNames.remove_at(folderNames.find(name));
+			for currentName in objNames:
+				folderNames.remove_at(folderNames.find(currentName));
 		if(folderNamesRare.size() == 0):
 			folderNamesRare = loadFile(nameFileRare);
 
@@ -184,5 +220,13 @@ func _on_cell_selected():
 
 
 func _on_item_activated():
-	get_selected().collapsed = !get_selected().collapsed;
-
+	if(main.getUpgrades().has("a2")):
+		get_selected().collapsed = !get_selected().collapsed;
+		if(!get_selected().collapsed):
+			var folders = [];
+			for folder in get_selected().get_children():
+				if(folder.get_child_count() != 0 && folder.collapsed):
+					folders.append(folder);
+			if(!folders.is_empty()):
+				var openFolder = folders.pick_random();
+				openFolder.collapsed = false;
