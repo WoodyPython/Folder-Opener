@@ -7,11 +7,17 @@ var totalFolders;
 var totalFiles;
 
 var secondCount = 0;
+var secondCount2 = 0;
 var autoOpenInterval = 5;
 
 var objectives;
 var objNames = [];
 var foldersList = [];
+var diskFiles = [];
+var chainFiles = [];
+var completedObj = [];
+
+@onready var left_display = $"../../.."
 
 @onready var nameFile = "res://Folder_Names.txt";
 @onready var nameFileRare = "res://Folder_Names_Rare.txt";
@@ -22,6 +28,9 @@ var folderNamesRare;
 
 signal updateDirectory(selected, objectives);
 signal showObjectives(objectives);
+signal diskClaimed();
+signal screenShake(strength);
+signal getCompletedObj();
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -58,6 +67,19 @@ func _process(delta):
 			if(!validFolders.is_empty()):
 				var choosenFolder = validFolders.pick_random();
 				choosenFolder.collapsed = false;
+	
+	if(main.getUpgrades().has("i5")):
+		for obj in objectives:
+			if(!obj.get_parent().collapsed && !left_display.completedObjectives.has(obj)):
+				secondCount2 += delta;
+				var threshold = 10.0;
+				if(main.getUpgrades().has("i7")):
+					threshold = 3.0;
+				if(secondCount2 <= threshold):
+					break;
+				secondCount2 = 0.0;
+				left_display.completedObjectives.append(obj);
+				left_display.update_objectives(objectives);
 
 func create(level):
 	self.clear();
@@ -65,6 +87,8 @@ func create(level):
 	secondCount = 0;
 	totalFolders = 0;
 	foldersList = [];
+	diskFiles = [];
+	chainFiles = [];
 	var scaling = 1.5;
 	
 	if(main.getUpgrades().has("n2")):
@@ -106,6 +130,14 @@ func create(level):
 	emit_signal("showObjectives", objectives);
 	root.select(0);
 	
+	if(main.getUpgrades().has("a5")):
+		if(rng.randi_range(1,4) == 1):
+			createDisk();
+	
+	if(main.getUpgrades().has("a4")):
+		for i in objCount:
+			createChain();
+	
 	if(main.getUpgrades().has("i2")):
 		root.collapsed = false;
 
@@ -141,7 +173,10 @@ func appendTree(level, root, type):
 	for i in repeatNum:
 		var child = self.create_item(root);
 		child.get_parent().set_icon(0, preload("res://Textures/FolderIcon.png"));
-		child.set_icon(0, preload("res://Textures/FileIcon.png"));
+		if(rng.randi_range(1,2) == 1):
+			child.set_icon(0, preload("res://Textures/FileIcon.png"));
+		else:
+			child.set_icon(0, preload("res://Textures/EmptyFile.png"));
 		totalFiles.append(child);
 		foldersList.append(child.get_parent());
 		
@@ -212,10 +247,22 @@ func createObjective():
 	var file = totalFiles.pick_random();
 	totalFiles.erase(file);
 	file.set_text(0, objNames.pop_front());
+	if(main.getUpgrades().has("n5")):
+		file.set_icon(0, preload("res://Textures/ObjectiveFile.png"));
+	if(main.getUpgrades().has("a3")):
+		if(file.get_parent().get_parent() != null):
+			file.get_parent().set_icon(0, preload("res://Textures/ObjectiveFolder.png"));
 	objectives.append(file);
 	
 
 func _on_cell_selected():
+	if(diskFiles.has(get_selected())):
+		emit_signal("diskClaimed");
+		return;
+	if(chainFiles.has(get_selected())):
+		createFolderChain();
+		get_selected().set_icon(0, preload("res://Textures/EmptyFile.png"));
+		chainFiles.erase(get_selected());
 	emit_signal("updateDirectory", get_selected(), objectives);
 
 
@@ -230,3 +277,48 @@ func _on_item_activated():
 			if(!folders.is_empty()):
 				var openFolder = folders.pick_random();
 				openFolder.collapsed = false;
+
+func createDisk():
+	if(totalFiles.is_empty()):
+		return;
+	var file = totalFiles.pick_random();
+	totalFiles.erase(file);
+	
+	file.set_icon(0, preload("res://Textures/DiskFile.png"));
+	diskFiles.append(file);
+	
+func createChain():
+	if(totalFiles.is_empty()):
+		return;
+	var file = totalFiles.pick_random();
+	totalFiles.erase(file);
+	
+	file.set_icon(0, preload("res://Textures/ChainFile.png"));
+	chainFiles.append(file);
+
+func createFolderChain():
+	emit_signal("screenShake", 1);
+	if(objectives.is_empty()):
+		return;
+	var validObjectives = [];
+	emit_signal("getCompletedObj");
+
+	for obj in objectives:
+		if(!completedObj.has(obj)):
+			if(obj.get_parent().get_icon(0) != preload("res://Textures/ChainFolder.png")):
+				validObjectives.append(obj);
+	
+	if(validObjectives.is_empty()):
+		return;
+	var origin = validObjectives.pick_random();
+	chainFolder(origin);
+	
+func chainFolder(child):
+	if(child.get_parent().get_parent() == null):
+		return;
+	child.get_parent().set_icon(0, preload("res://Textures/ChainFolder.png"));
+	chainFolder(child.get_parent());
+
+
+func _on_left_display_return_completed(completed):
+	completedObj = completed;

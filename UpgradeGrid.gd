@@ -7,23 +7,23 @@ extends GridContainer
 				"#upg2.1" : [2, 1, "Idle Path", "By buying this upgrade you unlock all other upgrades within this branch. You will not be able to buy upgrades from the Active Branch!", 0],
 				"#upg3.1" : [3, 1, "Neutral Path", "By buying this upgrade you unlock all other upgrades within this branch.", 0],
 				"#upg1.2" : [1, 10, "Manual Labor", "Allows you to double-click to open a folder. When double clicking a folder, open a random folder inside of it. ", 1],
-				"upg1.3" : [1, 5, "Improved Vision", "Folders will now be colored blue if they contain an objective. Does not including the Computer.", 1], 
+				"#upg1.3" : [1, 5, "Improved Vision", "Folders will now be colored blue if they contain an objective. Depth of 1. Does not including the Computer.", 1], 
 				"upg1.4" : [1, 25, "Chained Combo", "Some files will now become Chained Files, which when clicked on will reveal the direction to one of the objectives. The number of these files equals the number of Objective Files.", 3],
-				"upg1.5" : [1, 20, "Just One", "There is a rare chance to spawn a single Disk File. Clicking on one automatically completes the level and rewards 5x the Bits.", 3],
+				"#upg1.5" : [1, 20, "Just One", "There is a rare chance to spawn a single Disk File. Clicking on one automatically completes the level and rewards 5x the Bits.", 3],
 				"#upg2.2" : [2, 5, "Less Labor", "The Computer is automatically opened when starting a new level.", 1],
 				"#upg2.3" : [2, 5, "Automation Age", "Every 5 seconds a random folder is opened up.", 1], 
-				"upg2.4" : [2, 20, "Less Clicks", "Finding all objectives now automatically levels up, without needing to manually do so.", 2],
-				"upg2.5" : [2, 35, "Simple Collection", "If an Objective is on screen, automatically collect it after 10 seconds", 3],
-				"#upg2.6" : [2, 50, "Accelerated Pace", "The speed of opening folders increases with every folder opened (10% faster / folder)", 3],
-				"upg2.7" : [2, 100, "Quick Collection", "The time to automatically collect an objective is reduced to 3 seconds", 5],
-				"#upg3.2" : [3, 10, "Reduced Scales", "Level scaling is slightly reduced", 1],
-				"#upg3.3" : [3, 20, "More Gains", "Gain an extra bit per level up", 1], 
-				"#upg3.4" : [3, 30, "Even More Gains", "Collecting an objective now grants free bits", 2],
-				"upg3.5" : [3, 40, "Textured Files", "Objective Files will now have a different texture", 3],
-				"#upg3.6" : [3, 100, "Hyper Bits", "Gain double the bits from all sources", 5],
-				"#upg3.7" : [3, 50, "Faster Leveling", "When leveling up go up 2 levels instead of 1, but don't gain the extra bits", 4],
-				"upg3.8" : [3, 40, "Cross-Regional", "Allows you to pick 3 upgrades from the opposite branch.", 4],
-				"#upg3.9" : [3, 65, "Timed Runs", "Completing the level faster grants a multiplier to Bits gained", 6]};
+				"#upg2.4" : [2, 20, "Less Clicks", "Finding all objectives now automatically levels up, without needing to manually do so.", 2],
+				"#upg2.5" : [2, 35, "Simple Collection", "If an Objective is on screen, automatically collect it after 10 seconds.", 3],
+				"#upg2.6" : [2, 50, "Accelerated Pace", "The speed of opening folders increases with every folder opened (10% faster / folder).", 3],
+				"#upg2.7" : [2, 100, "Quick Collection", "The time to automatically collect an objective is reduced to 3 seconds.", 5],
+				"#upg3.2" : [3, 10, "Reduced Scales", "Level scaling is slightly reduced.", 1],
+				"#upg3.3" : [3, 20, "More Gains", "Gain an extra bit per level up.", 1], 
+				"#upg3.4" : [3, 30, "Even More Gains", "Collecting an objective now grants free bits.", 2],
+				"#upg3.5" : [3, 40, "Textured Files", "Objective Files will now have a different texture.", 3],
+				"#upg3.6" : [3, 100, "Hyper Bits", "Gain double the bits from all sources.", 5],
+				"#upg3.7" : [3, 50, "Faster Leveling", "When leveling up go up 2 levels instead of 1, but don't gain the extra bits.", 4],
+				"#upg3.8" : [3, 40, "Cross-Regional", "Allows you to pick 3 upgrades from the opposite branch.", 4],
+				"#upg3.9" : [3, 65, "Timed Runs", "Completing the level faster grants a multiplier to Bits gained.", 6]};
 				
 				
 @onready var displayedUpgradeCount = 0;
@@ -85,7 +85,7 @@ func updateDisplay():
 			emptySlot.appear();
 			
 			var newEmptySlots = 3 - floor(emptySlots.size() / 3);
-			for i in newEmptySlots*3:
+			for i in newEmptySlots * 3:
 				var upgradeObject = upgradeObjectScene.instantiate();
 				add_child(upgradeObject);
 				upgradeObject.setParams(0, 0, "", "", "");

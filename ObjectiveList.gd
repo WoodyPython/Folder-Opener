@@ -2,9 +2,10 @@ extends VBoxContainer
 
 @onready var list = %List
 @onready var button = %LevelCompleteBtn
-
+@onready var main = get_tree().root.get_child(0);
 var objectives;
 
+signal nextLevel();
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	button.disabled = true;
@@ -31,5 +32,8 @@ func update(completed, total):
 	list.set_fixed_icon_size(Vector2i(20, 20));
 	
 	if(completed.size() == total.size()):
+		if(main.getUpgrades().has("i4")):
+			emit_signal("nextLevel");
+			return;
 		button.disabled = false;
 		button.icon = preload("res://Textures/Found.png");

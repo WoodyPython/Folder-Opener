@@ -5,6 +5,8 @@ extends PanelContainer
 @onready var costLabel = %Cost
 @onready var outline_color = %OutlineColor
 
+@onready var typeToNum = {"a": 1, "i": 2, "n": 3};
+
 var cost;
 var type; # 1 = active, 2 = idle, 3 = neutral
 var title;
@@ -70,9 +72,11 @@ func updatecolor():
 	
 	var allowed = true;
 	if(hovered):
-		if(type == 1 && main.getUpgrades().has("i1") || type == 2 && main.getUpgrades().has("a1")):
+		if(!canBuy() && !bought):
 			allowed = false;
 			mouse_default_cursor_shape = Control.CURSOR_FORBIDDEN;
+		else:
+			mouse_default_cursor_shape = Control.CURSOR_ARROW;
 	
 	if(hovered && !bought && allowed):
 		outline_color.border_color = outline_color.border_color.lightened(0.3);
@@ -89,8 +93,9 @@ func _on_gui_input(event):
 		if(type == 0):
 			return;
 		
-		if(type == 1 && main.getUpgrades().has("i1") || type == 2 && main.getUpgrades().has("a1")):
+		if(!canBuy()):
 			return;
+		
 		if(main.getBits() >= cost && !main.getUpgrades().has(upgradeID)):
 			main.removeBits(cost);
 			bought = true;
@@ -118,3 +123,15 @@ func updatealpha():
 	if(modulate.a < 1.0):
 		modulate.a += 0.025;
 		modulate.a = clamp(modulate.a, 0.0, 1.0);
+
+func canBuy():
+	var specificUpgCount = {1: 0, 2: 0, 3: 0};
+	for upgrade in main.getUpgrades():
+		specificUpgCount[typeToNum[upgrade[0]]] += 1;
+	var limit = 0;
+	if(main.getUpgrades().has("n8")):
+		limit += 3;
+	if(type == 1 && specificUpgCount[1] == limit && specificUpgCount[2] > limit || type == 2 && specificUpgCount[2] == limit && specificUpgCount[1] > limit):
+		return false;
+	
+	return true;

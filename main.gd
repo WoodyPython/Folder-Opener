@@ -40,28 +40,31 @@ func _input(event):
 	if(event.is_action_pressed("esc")):
 		get_tree().quit();
 	if(event.is_action_pressed("newTree")):
-		nextLevel();
+		nextLevel(0);
 
 func update_level_display():
 	left_display.set_level(level);
 	right_display.display_bits(bits);
 
-func nextLevel():
+func nextLevel(hasDisk):
 	var totalGain = level;
 	
 	if(upgradeList.has("n3")):
 		totalGain += 1;
 		
 	if(upgradeList.has("n9")):
-		var multi = 5/levelTime + 1;
+		var multi = 1/levelTime + 1;
 		totalGain *= multi;
 		totalGain = round(totalGain);
-		
+	
+	if(hasDisk == 1):
+		totalGain *= 5;
 	grantBits(totalGain);
 	
-	level += 1;
+	var levelGain = 1;
 	if(upgradeList.has("n7")):
-		level += 1;
+		levelGain += 1;
+	level += levelGain;
 	update_level_display();
 	left_display.tree_create(level);
 	
@@ -69,8 +72,8 @@ func nextLevel():
 	levelTime = 0;
 
 
-func _on_left_display_next_level():
-	call_deferred("nextLevel");
+func _on_left_display_next_level(disk):
+	call_deferred("nextLevel", disk);
 
 #resets the shake value, causing screen to shake again
 func camera_shake(percent):
@@ -100,3 +103,4 @@ func grantBits(gain):
 	if(upgradeList.has("n6")):
 		gain *= 2;
 	bits += gain;
+	

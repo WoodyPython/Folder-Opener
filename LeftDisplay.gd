@@ -11,11 +11,11 @@ extends Control
 var completedObjectives;
 var directoryName;
 
-
 var rng = RandomNumberGenerator.new();
 
-signal nextLevel();
+signal nextLevel(disk);
 signal screenShake(percent);
+signal returnCompleted(completed);
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,7 +37,7 @@ func tree_create(level):
 
 func update_objectives(objectives):
 	objective_list.update(completedObjectives, objectives);
-
+					
 
 func _on_folder_tree_update_directory(selected, objectives):
 	directoryName = "";
@@ -78,8 +78,24 @@ func _on_folder_tree_show_objectives(objectives):
 	update_objectives(objectives);
 
 
-
 func _on_level_complete_btn_pressed():
+	startNextLevel(0);
+
+func startNextLevel(disk):
 	completeParticles.emitting = true;
 	completeParticles.restart();
-	emit_signal("nextLevel");
+	emit_signal("nextLevel", disk);
+
+func _on_objective_list_next_level():
+	startNextLevel(0);
+
+
+func _on_folder_tree_disk_claimed():
+	startNextLevel(1);
+
+
+func _on_folder_tree_screen_shake(strength):
+	emit_signal("screenShake", strength);
+
+func _on_folder_tree_get_completed_obj():
+	emit_signal("returnCompleted", completedObjectives);

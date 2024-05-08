@@ -204,8 +204,13 @@ randomness = 0.33
 fixed_fps = 60
 trail_lifetime = 0.64
 
+[connection signal="returnCompleted" from="." to="VBoxContainer/VSplitContainer/FolderTree" method="_on_left_display_return_completed"]
 [connection signal="cell_selected" from="VBoxContainer/VSplitContainer/FolderTree" to="VBoxContainer/VSplitContainer/FolderTree" method="_on_cell_selected"]
+[connection signal="diskClaimed" from="VBoxContainer/VSplitContainer/FolderTree" to="." method="_on_folder_tree_disk_claimed"]
+[connection signal="getCompletedObj" from="VBoxContainer/VSplitContainer/FolderTree" to="." method="_on_folder_tree_get_completed_obj"]
 [connection signal="item_activated" from="VBoxContainer/VSplitContainer/FolderTree" to="VBoxContainer/VSplitContainer/FolderTree" method="_on_item_activated"]
+[connection signal="screenShake" from="VBoxContainer/VSplitContainer/FolderTree" to="." method="_on_folder_tree_screen_shake"]
 [connection signal="showObjectives" from="VBoxContainer/VSplitContainer/FolderTree" to="." method="_on_folder_tree_show_objectives"]
 [connection signal="updateDirectory" from="VBoxContainer/VSplitContainer/FolderTree" to="." method="_on_folder_tree_update_directory"]
+[connection signal="nextLevel" from="VBoxContainer/VSplitContainer/ObjectiveList" to="." method="_on_objective_list_next_level"]
 [connection signal="pressed" from="VBoxContainer/VSplitContainer/ObjectiveList/LevelCompleteBtn" to="." method="_on_level_complete_btn_pressed"]
