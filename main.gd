@@ -10,7 +10,7 @@ var levelTime = 0;
 @export var SHAKE_DECAY = 5.0;
 
 @onready var left_display = %"Left Display";
-@onready var right_display  = %"Right Display";
+@onready var right_display = %"Right Display";
 @onready var camera = %Camera;
 
 @onready var rand = RandomNumberGenerator.new();
@@ -22,7 +22,7 @@ func _ready():
 
 func start():
 	level = 1;
-	bits = 9999;
+	bits = 0;
 	left_display.tree_create(level);
 	right_display.display_bits(bits);
 
@@ -104,3 +104,7 @@ func grantBits(gain):
 		gain *= 2;
 	bits += gain;
 	
+
+
+func _on_left_display_get_contents(selected, isObjective):
+	right_display.getContents(selected, isObjective);

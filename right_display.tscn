@@ -1,9 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4wieuvlxnlob"]
+[gd_scene load_steps=8 format=3 uid="uid://c4wieuvlxnlob"]
 
 [ext_resource type="Script" path="res://RightDisplay.gd" id="1_hpkwl"]
 [ext_resource type="Script" path="res://UpgradeGrid.gd" id="2_qncru"]
+[ext_resource type="Script" path="res://FileContents.gd" id="3_anpwr"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ll6c7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q541l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hfjpu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_srr1r"]
 
 [node name="Right Display" type="PanelContainer"]
 anchors_preset = 15
@@ -56,14 +63,22 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/side_margin = 0
 theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_ll6c7")
+current_tab = 1
 clip_tabs = false
 all_tabs_in_front = true
 
 [node name="Upgrades" type="PanelContainer" parent="VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/TabContainer/Upgrades"]
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/TabContainer/Upgrades"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_top = -1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/TabContainer/Upgrades/MarginContainer2"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 1
@@ -85,10 +100,111 @@ theme_override_constants/v_separation = 5
 columns = 3
 script = ExtResource("2_qncru")
 
-[node name="File Contents" type="MenuButton" parent="VBoxContainer/TabContainer"]
-visible = false
+[node name="File Contents" type="PanelContainer" parent="VBoxContainer/TabContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+script = ExtResource("3_anpwr")
 
-[node name="Settings" type="MenuButton" parent="VBoxContainer/TabContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TabContainer/File Contents"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_top = -1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/TabContainer/File Contents/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/File Contents"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 1
+
+[node name="PanelContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Name"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = -1
+
+[node name="FileDataNames" type="ItemList" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_q541l")
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = -1
+
+[node name="PanelContainer2" type="VBoxContainer" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer/PanelContainer2/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Type
+"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/separation = -1
+
+[node name="FileDataTypes" type="ItemList" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer/PanelContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hfjpu")
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = -1
+
+[node name="PanelContainer3" type="VBoxContainer" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer/PanelContainer3"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer/PanelContainer3/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Data"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer/PanelContainer3"]
+layout_mode = 2
+theme_override_constants/separation = -1
+
+[node name="FileData" type="ItemList" parent="VBoxContainer/TabContainer/File Contents/HBoxContainer/PanelContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_srr1r")
+
+[node name="Settings" type="PanelContainer" parent="VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2

@@ -101,7 +101,6 @@ split_offset = 30
 
 [node name="FolderTree" type="Tree" parent="VBoxContainer/VSplitContainer"]
 unique_name_in_owner = true
-z_as_relative = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

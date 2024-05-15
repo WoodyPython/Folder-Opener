@@ -62,5 +62,6 @@ theme_override_constants/separation = -2
 unique_name_in_owner = true
 anchor_mode = 0
 
+[connection signal="getContents" from="HBoxContainer/HSplitContainer/PanelContainer/Left Display" to="." method="_on_left_display_get_contents"]
 [connection signal="nextLevel" from="HBoxContainer/HSplitContainer/PanelContainer/Left Display" to="." method="_on_left_display_next_level"]
 [connection signal="screenShake" from="HBoxContainer/HSplitContainer/PanelContainer/Left Display" to="." method="_on_left_display_screen_shake"]

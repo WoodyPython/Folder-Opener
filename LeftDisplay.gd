@@ -16,6 +16,7 @@ var rng = RandomNumberGenerator.new();
 signal nextLevel(disk);
 signal screenShake(percent);
 signal returnCompleted(completed);
+signal getContents(selected, isObjective);
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -41,7 +42,9 @@ func update_objectives(objectives):
 
 func _on_folder_tree_update_directory(selected, objectives):
 	directoryName = "";
-
+	
+	emit_signal("getContents", selected, objectives.has(selected));
+	
 	getDirectory(selected);
 	directory.set_text(directoryName);
 	
@@ -99,3 +102,4 @@ func _on_folder_tree_screen_shake(strength):
 
 func _on_folder_tree_get_completed_obj():
 	emit_signal("returnCompleted", completedObjectives);
+	

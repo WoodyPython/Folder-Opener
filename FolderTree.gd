@@ -118,6 +118,7 @@ func create(level):
 		folderNames.remove_at(index);
 	
 	appendTree(level, root, "flat");
+	root.set_tooltip_text(0, " ");
 	root.set_collapsed_recursive(true);
 
 	self.scroll_to_item(root);
@@ -172,6 +173,7 @@ func appendTree(level, root, type):
 		
 	for i in repeatNum:
 		var child = self.create_item(root);
+		child.set_tooltip_text(0, " ");
 		child.get_parent().set_icon(0, preload("res://Textures/FolderIcon.png"));
 		if(rng.randi_range(1,2) == 1):
 			child.set_icon(0, preload("res://Textures/FileIcon.png"));

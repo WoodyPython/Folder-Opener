@@ -23,6 +23,7 @@ func update(completed, total):
 	
 	for obj in total:
 		list.add_item(obj.get_text(0), null, false);
+		list.set_item_tooltip_enabled(i, false);
 		if(completed.has(obj)):
 			list.set_item_disabled(i, true);
 			list.set_item_icon(i, preload("res://Textures/Found.png"));

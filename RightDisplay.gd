@@ -2,6 +2,7 @@ extends PanelContainer
 
 @onready var bit_display = %"Bit Display"
 @onready var news_display = %"News Display"
+@onready var file_contents = %"File Contents"
 
 @onready var rng = RandomNumberGenerator.new();
 
@@ -48,3 +49,5 @@ func pickNews():
 	if(oldNews != null):
 		newsList.append(oldNews);
 	
+func getContents(selected, isObjective):
+	file_contents.getContents(selected, isObjective);
