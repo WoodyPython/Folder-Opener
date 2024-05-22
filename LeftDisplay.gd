@@ -51,7 +51,7 @@ func _on_folder_tree_update_directory(selected, objectives):
 	if(objectives.has(selected)):
 		if(!completedObjectives.has(selected)):
 			if(main.getUpgrades().has("n4")):
-				main.grantBits(1);
+				main.grantBits(3);
 				objectiveParticles.position = get_viewport().get_mouse_position();
 				objectiveParticles.position.y -= 100;
 				objectiveParticles.amount = rng.randi_range(4, 7);

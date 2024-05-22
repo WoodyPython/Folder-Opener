@@ -51,3 +51,6 @@ func pickNews():
 	
 func getContents(selected, isObjective):
 	file_contents.getContents(selected, isObjective);
+
+func clearFileData():
+	file_contents.clearData();

@@ -39,6 +39,8 @@ func _ready():
 	noise.fractal_octaves = 4;
 	noise.frequency = 1.0 / 10.0;
 	
+	z_as_relative = false;
+	z_as_relative = true;
 	
 func loadFile(file):
 	var newFile = FileAccess.open(file, FileAccess.READ);
@@ -166,13 +168,19 @@ func appendTree(level, root, type):
 	if(level + 1 >= maxLevel):
 		repeatNum += 1;
 	
-	#repeatNum = clamp(repeatNum, 1, maxLevel/4+1);
 	if(repeatNum > 0):
 		totalFolders += 1;
 		totalFiles.erase(root);
-		
+	
+	var children = [];
 	for i in repeatNum:
 		var child = self.create_item(root);
+		children.append(child);
+	
+	for i in repeatNum:
+		var child = children.pick_random();
+		children.erase(child);
+		
 		child.set_tooltip_text(0, " ");
 		child.get_parent().set_icon(0, preload("res://Textures/FolderIcon.png"));
 		if(rng.randi_range(1,2) == 1):

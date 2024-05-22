@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dqxjpxxvtg1jh"]
+[gd_scene load_steps=14 format=3 uid="uid://dqxjpxxvtg1jh"]
 
 [ext_resource type="Script" path="res://LeftDisplay.gd" id="1_0j0bb"]
 [ext_resource type="Script" path="res://FolderTree.gd" id="2_hn658"]
@@ -8,6 +8,13 @@
 [ext_resource type="Texture2D" uid="uid://dmwkm3jt3smhd" path="res://Textures/Gear.png" id="6_iavdn"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h1bdl"]
+
+[sub_resource type="Curve" id="Curve_betpu"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.201531, 0.344912), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_2xgae"]
+curve = SubResource("Curve_betpu")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iiodi"]
 resource_local_to_scene = true
@@ -23,6 +30,8 @@ orbit_velocity_max = 0.177
 gravity = Vector3(0, 98, 0)
 scale_min = 0.0
 scale_max = 0.05
+color = Color(0.698039, 1, 0.8, 1)
+alpha_curve = SubResource("CurveTexture_2xgae")
 hue_variation_min = -0.04
 hue_variation_max = 0.13
 turbulence_noise_strength = 0.0
@@ -30,6 +39,13 @@ turbulence_noise_scale = 0.0
 turbulence_noise_speed_random = 0.39
 turbulence_influence_min = 0.0
 turbulence_influence_max = 0.0
+
+[sub_resource type="Curve" id="Curve_ggb81"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_sarvg"]
+curve = SubResource("Curve_ggb81")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xl1up"]
 particle_flag_disable_z = true
@@ -42,6 +58,7 @@ gravity = Vector3(0, 98, 0)
 scale_min = 0.02
 scale_max = 0.05
 color = Color(0.886275, 0.980392, 0.956863, 1)
+alpha_curve = SubResource("CurveTexture_sarvg")
 hue_variation_min = -0.1
 hue_variation_max = -0.01
 turbulence_enabled = true

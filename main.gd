@@ -22,7 +22,7 @@ func _ready():
 
 func start():
 	level = 1;
-	bits = 0;
+	bits = 999;
 	left_display.tree_create(level);
 	right_display.display_bits(bits);
 
@@ -67,6 +67,7 @@ func nextLevel(hasDisk):
 	level += levelGain;
 	update_level_display();
 	left_display.tree_create(level);
+	clearFileData();
 	
 	camera_shake(2);
 	levelTime = 0;
@@ -108,3 +109,6 @@ func grantBits(gain):
 
 func _on_left_display_get_contents(selected, isObjective):
 	right_display.getContents(selected, isObjective);
+
+func clearFileData():
+	right_display.clearFileData();

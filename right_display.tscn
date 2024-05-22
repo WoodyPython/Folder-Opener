@@ -65,12 +65,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/side_margin = 0
 theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_ll6c7")
-current_tab = 1
 clip_tabs = false
 all_tabs_in_front = true
 
 [node name="Upgrades" type="PanelContainer" parent="VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/TabContainer/Upgrades"]
@@ -102,6 +100,7 @@ script = ExtResource("2_qncru")
 
 [node name="File Contents" type="PanelContainer" parent="VBoxContainer/TabContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 script = ExtResource("3_anpwr")
 
