@@ -22,7 +22,7 @@ func _ready():
 
 func start():
 	level = 1;
-	bits = 999;
+	bits = 0;
 	left_display.tree_create(level);
 	right_display.display_bits(bits);
 
@@ -58,7 +58,7 @@ func nextLevel(hasDisk):
 		totalGain = round(totalGain);
 	
 	if(hasDisk == 1):
-		totalGain *= 5;
+		totalGain *= 2;
 	grantBits(totalGain);
 	
 	var levelGain = 1;
@@ -112,3 +112,6 @@ func _on_left_display_get_contents(selected, isObjective):
 
 func clearFileData():
 	right_display.clearFileData();
+
+func emitObjParticles(pos):
+	left_display.emitParticles(pos);

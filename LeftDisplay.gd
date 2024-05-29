@@ -52,11 +52,9 @@ func _on_folder_tree_update_directory(selected, objectives):
 		if(!completedObjectives.has(selected)):
 			if(main.getUpgrades().has("n4")):
 				main.grantBits(3);
-				objectiveParticles.position = get_viewport().get_mouse_position();
-				objectiveParticles.position.y -= 100;
-				objectiveParticles.amount = rng.randi_range(4, 7);
-				objectiveParticles.emitting = true;
-				objectiveParticles.restart();
+				var pos = get_viewport().get_mouse_position();
+				pos.y -= 100;
+				emitParticles(pos);
 			
 			selected.set_icon(0, preload("res://Textures/Found.png"));
 			
@@ -66,7 +64,13 @@ func _on_folder_tree_update_directory(selected, objectives):
 			
 		update_objectives(objectives);
 			
-	
+
+func emitParticles(pos):
+	objectiveParticles.position = pos;
+	objectiveParticles.amount = rng.randi_range(4, 7);
+	objectiveParticles.emitting = true;
+	objectiveParticles.restart();
+
 func getDirectory(selected):
 	if(selected == null):
 		return "";

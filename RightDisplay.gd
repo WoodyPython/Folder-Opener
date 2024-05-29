@@ -10,6 +10,7 @@ var newsList;
 var newsTextI;
 var currentNews;
 var newsSpeed;
+@onready var newsToggle = true;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,16 +21,19 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
+	if(newsToggle):
+		news_display.set_text(currentNews);
 
-	news_display.set_text(currentNews);
-	newsTextI = lerp(float(newsTextI), float(newsTextI + delta*5), newsSpeed);
-	
-	news_display.set_position(Vector2(newsTextI*-1, 0.0));
-	
-	if(newsTextI >= 1500):
-		pickNews();
-		newsTextI = -500;
-	
+		newsTextI = lerp(float(newsTextI), float(newsTextI + delta*5), newsSpeed);
+		
+		news_display.set_position(Vector2(newsTextI*-1, 0.0));
+		
+		if(newsTextI >= 1500):
+			pickNews();
+			newsTextI = -500;
+	else:
+		news_display.set_text(" ");
 
 
 func display_bits(bits):
@@ -54,3 +58,6 @@ func getContents(selected, isObjective):
 
 func clearFileData():
 	file_contents.clearData();
+
+func toggleNews(toggle):
+	newsToggle = toggle;

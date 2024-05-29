@@ -208,6 +208,7 @@ trail_lifetime = 0.5
 
 [node name="ObjectiveParticles" type="GPUParticles2D" parent="VBoxContainer/VSplitContainer"]
 unique_name_in_owner = true
+top_level = true
 emitting = false
 amount = 5
 process_material = SubResource("ParticleProcessMaterial_xl1up")

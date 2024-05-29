@@ -134,7 +134,7 @@ func create(level):
 	root.select(0);
 	
 	if(main.getUpgrades().has("a5")):
-		if(rng.randi_range(1,4) == 1):
+		if(rng.randi_range(1,20) == 1):
 			createDisk();
 	
 	if(main.getUpgrades().has("a4")):
