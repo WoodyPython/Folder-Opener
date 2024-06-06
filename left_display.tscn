@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dqxjpxxvtg1jh"]
+[gd_scene load_steps=15 format=3 uid="uid://dqxjpxxvtg1jh"]
 
 [ext_resource type="Script" path="res://LeftDisplay.gd" id="1_0j0bb"]
 [ext_resource type="Script" path="res://FolderTree.gd" id="2_hn658"]
@@ -39,6 +39,8 @@ turbulence_noise_scale = 0.0
 turbulence_noise_speed_random = 0.39
 turbulence_influence_min = 0.0
 turbulence_influence_max = 0.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wuhle"]
 
 [sub_resource type="Curve" id="Curve_ggb81"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -114,6 +116,7 @@ layout_mode = 2
 [node name="VSplitContainer" type="VSplitContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/autohide = 0
 split_offset = 30
 
 [node name="FolderTree" type="Tree" parent="VBoxContainer/VSplitContainer"]
@@ -205,6 +208,25 @@ fixed_fps = 60
 visibility_rect = Rect2(-50, -50, 100, 100)
 trail_enabled = true
 trail_lifetime = 0.5
+
+[node name="NotifBox" type="PanelContainer" parent="VBoxContainer/VSplitContainer/ObjectiveList/LevelCompleteBtn"]
+unique_name_in_owner = true
+clip_contents = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -18.5
+offset_right = 32.0
+offset_bottom = 21.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wuhle")
 
 [node name="ObjectiveParticles" type="GPUParticles2D" parent="VBoxContainer/VSplitContainer"]
 unique_name_in_owner = true

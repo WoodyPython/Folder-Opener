@@ -12,9 +12,14 @@ var levelTime = 0;
 @onready var left_display = %"Left Display";
 @onready var right_display = %"Right Display";
 @onready var camera = %Camera;
+@onready var outerContainer = %HBoxContainer
+var rainbowIndex = 0;
+
+@onready var notificationScene = preload("res://notification.tscn");
 
 @onready var rand = RandomNumberGenerator.new();
 
+var notifObject;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,13 +27,15 @@ func _ready():
 
 func start():
 	level = 1;
-	bits = 0;
+	bits = 999;
 	left_display.tree_create(level);
 	right_display.display_bits(bits);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	update_level_display();
+	update_toggles();
+	#update_rainbow();
 	
 	shake = lerp(shake, 0.0, SHAKE_DECAY * delta);
 	camera.offset = get_random_offset();
@@ -78,6 +85,8 @@ func _on_left_display_next_level(disk):
 
 #resets the shake value, causing screen to shake again
 func camera_shake(percent):
+	if(!right_display.toggleList.has("screenshake")):
+		return;
 	shake = RANDOM_SHAKE_STRENGTH * percent;
 
 #gets the random offset based on current shake	
@@ -115,3 +124,16 @@ func clearFileData():
 
 func emitObjParticles(pos):
 	left_display.emitParticles(pos);
+
+func update_toggles():
+	right_display.updateToggles(upgradeList);
+
+func updateTogglesLeft(toggleList):
+	left_display.updateToggles(toggleList);
+
+func update_rainbow():
+	rainbowIndex += 1;
+	if(rainbowIndex > 255):
+		rainbowIndex = 0;
+	
+	outerContainer.modulate = Color.from_hsv(rainbowIndex/255.0, 1, 1, 1);

@@ -52,7 +52,7 @@ func loadFile(file):
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if(main.getUpgrades().has("i3")):
+	if(main.getUpgrades().has("i3") && left_display.togglesList.has("auto-open")):
 		secondCount += delta;
 		if(secondCount >= autoOpenInterval):
 			secondCount = 0;
@@ -82,6 +82,10 @@ func _process(delta):
 				secondCount2 = 0.0;
 				left_display.completedObjectives.append(obj);
 				left_display.update_objectives(objectives);
+				obj.set_icon(0, preload("res://Textures/Found.png"));
+				
+				if(main.getUpgrades().has("n4")):
+					main.grantBits(3);
 
 func create(level):
 	self.clear();

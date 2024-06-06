@@ -47,9 +47,12 @@ func updateDescription():
 	titleLabel.set_text(title);
 
 func updatecolor():
-	if(modulate.a < 1):
-		updatealpha();
-		return;
+	var alpha = modulate.a;
+	if(alpha < 1):
+		if(bought):
+			modulate.a = 1;
+			return;
+
 		
 	if(type == 0):
 		outline_color.border_color = Color.DARK_GRAY.darkened(0.5);
@@ -85,6 +88,11 @@ func updatecolor():
 	modulate = outline_color.border_color;
 	if(bought):
 		modulate = modulate.lightened(0.3);
+	
+	if(alpha < 1):
+		modulate.a = alpha;
+		updatealpha();
+		return;
 	
 
 

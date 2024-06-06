@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cg6wlvofvs7gy"]
+
+[ext_resource type="Script" path="res://Notification.gd" id="1_vdbm4"]
+[ext_resource type="Texture2D" uid="uid://dtm6c54obmpw8" path="res://Textures/Notification.png" id="2_8rg16"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fvk1p"]
+
+[node name="NotifObject" type="PanelContainer"]
+top_level = true
+anchors_preset = -1
+anchor_right = 0.0175594
+anchor_bottom = 0.0447481
+offset_right = 4.77158
+offset_bottom = -3.99674
+rotation = 0.176278
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_fvk1p")
+script = ExtResource("1_vdbm4")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_8rg16")
+expand_mode = 1
+stretch_mode = 4

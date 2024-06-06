@@ -149,3 +149,39 @@ CI
 CMF
 Els
 Cryptography
+-----------
+Git Bash
+Git CMD
+PowerCfg
+Quick Actions
+Sound
+AdditionalClocks
+Volatile Environment
+Pinned
+Unpinned
+PowerPolicies
+Geo
+StartupApproved
+Run
+PrintComplete
+PanelSound
+RestoreDown
+RestoreUp
+SecurityBand
+ShowBand
+SystemAsterisk
+devenv
+Maximize
+Minimize
+.current
+MoveMenuItem
+Navigating
+CurVer
+XML
+OpenWithList
+OpenWithProgids
+pintohomefile
+FaxBeep
+MailBeep
+MessageNudge
+MisrecoSound

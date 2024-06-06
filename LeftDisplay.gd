@@ -10,6 +10,7 @@ extends Control
 @onready var main = get_tree().root.get_child(0);
 var completedObjectives;
 var directoryName;
+@onready var togglesList = [];
 
 var rng = RandomNumberGenerator.new();
 
@@ -53,7 +54,6 @@ func _on_folder_tree_update_directory(selected, objectives):
 			if(main.getUpgrades().has("n4")):
 				main.grantBits(3);
 				var pos = get_viewport().get_mouse_position();
-				pos.y -= 100;
 				emitParticles(pos);
 			
 			selected.set_icon(0, preload("res://Textures/Found.png"));
@@ -107,3 +107,5 @@ func _on_folder_tree_screen_shake(strength):
 func _on_folder_tree_get_completed_obj():
 	emit_signal("returnCompleted", completedObjectives);
 	
+func updateToggles(toggleList):
+	togglesList = toggleList;

@@ -78,3 +78,15 @@ ConvertedDevice
 BitLocker
 BitlockerStatus
 CrashControl
+---------
+Uninstall
+User Profile
+xbox
+Connections
+SystemExit
+Close
+BlockedPopup
+removeproperties
+DropTarget
+Open With
+WorkFolders

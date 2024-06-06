@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4wieuvlxnlob"]
+[gd_scene load_steps=11 format=3 uid="uid://c4wieuvlxnlob"]
 
 [ext_resource type="Script" path="res://RightDisplay.gd" id="1_hpkwl"]
 [ext_resource type="Script" path="res://UpgradeGrid.gd" id="2_qncru"]
@@ -14,6 +14,8 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_srr1r"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5b680"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_74v5e"]
 
 [node name="Right Display" type="PanelContainer"]
 anchors_preset = 15
@@ -68,7 +70,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/side_margin = 0
 theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_ll6c7")
-current_tab = 2
+current_tab = 3
 clip_tabs = false
 all_tabs_in_front = true
 
@@ -210,6 +212,8 @@ size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxEmpty_srr1r")
 
 [node name="Toggles" type="PanelContainer" parent="VBoxContainer/TabContainer"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 script = ExtResource("4_yfhvk")
 
@@ -223,10 +227,24 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Toggles"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TabContainer/Toggles"]
 layout_mode = 2
 
-[node name="NewsToggle" type="CheckButton" parent="VBoxContainer/TabContainer/Toggles/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Toggles/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScreenShakeToggle" type="CheckButton" parent="VBoxContainer/TabContainer/Toggles/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5b680")
+button_pressed = true
+text = "Screen Shake"
+
+[node name="NewsToggle" type="CheckButton" parent="VBoxContainer/TabContainer/Toggles/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -235,5 +253,50 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_5b680")
 button_pressed = true
 text = "News Ticker "
 
+[node name="AutoFolderToggle" type="CheckButton" parent="VBoxContainer/TabContainer/Toggles/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/focus = SubResource("StyleBoxEmpty_74v5e")
+button_pressed = true
+text = "Auto Folder Opener"
+
+[node name="AutoCompleteToggle" type="CheckButton" parent="VBoxContainer/TabContainer/Toggles/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/focus = SubResource("StyleBoxEmpty_74v5e")
+button_pressed = true
+text = "Auto Complete"
+
+[node name="About Screen" type="PanelContainer" parent="VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TabContainer/About Screen"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_top = -1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/TabContainer/About Screen/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/TabContainer/About Screen"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/About Screen/MarginContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/About Screen/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 2
+
 [connection signal="item_clicked" from="VBoxContainer/TabContainer/File Contents/HBoxContainer/PanelContainer/FileDataNames" to="VBoxContainer/TabContainer/File Contents" method="_on_file_data_names_item_clicked"]
-[connection signal="toggled" from="VBoxContainer/TabContainer/Toggles/VBoxContainer/NewsToggle" to="VBoxContainer/TabContainer/Toggles" method="_on_news_toggle_toggled"]
+[connection signal="toggled" from="VBoxContainer/TabContainer/Toggles/ScrollContainer/VBoxContainer/ScreenShakeToggle" to="VBoxContainer/TabContainer/Toggles" method="_on_screen_shake_toggle_toggled"]
+[connection signal="toggled" from="VBoxContainer/TabContainer/Toggles/ScrollContainer/VBoxContainer/NewsToggle" to="VBoxContainer/TabContainer/Toggles" method="_on_news_toggle_toggled"]
+[connection signal="toggled" from="VBoxContainer/TabContainer/Toggles/ScrollContainer/VBoxContainer/AutoFolderToggle" to="VBoxContainer/TabContainer/Toggles" method="_on_auto_folder_toggle_toggled"]
+[connection signal="toggled" from="VBoxContainer/TabContainer/Toggles/ScrollContainer/VBoxContainer/AutoCompleteToggle" to="VBoxContainer/TabContainer/Toggles" method="_on_auto_complete_toggle_toggled"]

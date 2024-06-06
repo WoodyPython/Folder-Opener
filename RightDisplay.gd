@@ -3,6 +3,8 @@ extends PanelContainer
 @onready var bit_display = %"Bit Display"
 @onready var news_display = %"News Display"
 @onready var file_contents = %"File Contents"
+@onready var toggles = %Toggles
+@onready var main = $"../../../.."
 
 @onready var rng = RandomNumberGenerator.new();
 
@@ -10,7 +12,7 @@ var newsList;
 var newsTextI;
 var currentNews;
 var newsSpeed;
-@onready var newsToggle = true;
+@onready var toggleList = ["news", "screenshake", "auto-open", "auto-complete"];
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,8 +23,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
-	if(newsToggle):
+	main.updateTogglesLeft(toggleList);
+	if(toggleList.has("news")):
 		news_display.set_text(currentNews);
 
 		newsTextI = lerp(float(newsTextI), float(newsTextI + delta*5), newsSpeed);
@@ -59,5 +61,12 @@ func getContents(selected, isObjective):
 func clearFileData():
 	file_contents.clearData();
 
-func toggleNews(toggle):
-	newsToggle = toggle;
+
+func updateToggles(upgrades):
+	toggles.update(upgrades);
+
+func toggleThing(toggle, name):
+	if(toggle):
+		toggleList.append(name);
+	else:
+		toggleList.erase(name);

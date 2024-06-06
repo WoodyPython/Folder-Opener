@@ -130,3 +130,22 @@ WindowText
 Contact Permission
 GUID
 Never Ask
+------------
+FriendlyTypeName
+URL Protocol
+UninstallID
+Current
+NewCurrent
+SchemeLangID
+EditFlags
+Source Filter
+Fax
+NeverDefault
+SkipCloudDownload
+Icon
+CommandStateHandler
+UpdateType
+AttributeMask
+AttributeValue
+ShowAsDisabledfHidden
+DelegateExecute

@@ -2,8 +2,13 @@ extends VBoxContainer
 
 @onready var list = %List
 @onready var button = %LevelCompleteBtn
+@onready var left_display = $"../../.."
+@onready var notif_box = %NotifBox
+
 @onready var main = get_tree().root.get_child(0);
+var notifObject;
 var objectives;
+var ogLvl;
 
 signal nextLevel();
 # Called when the node enters the scene tree for the first time.
@@ -13,7 +18,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if(main.level != ogLvl && notifObject != null):
+		clearNotif();
 
 func update(completed, total):
 	list.clear();
@@ -33,8 +39,20 @@ func update(completed, total):
 	list.set_fixed_icon_size(Vector2i(20, 20));
 	
 	if(completed.size() == total.size()):
-		if(main.getUpgrades().has("i4")):
+		if(main.getUpgrades().has("i4") && left_display.togglesList.has("auto-complete")):
 			emit_signal("nextLevel");
 			return;
 		button.disabled = false;
 		button.icon = preload("res://Textures/Found.png");
+		ogLvl = main.level;
+		setNotification();
+
+func setNotification():
+	notifObject = preload("res://notification.tscn").instantiate();
+	main.add_child(notifObject);
+	notifObject.add_parent(notif_box);
+	
+func clearNotif():
+	main.remove_child(notifObject);
+	notifObject = null;
+
