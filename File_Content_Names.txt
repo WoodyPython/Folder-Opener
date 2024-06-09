@@ -130,7 +130,6 @@ WindowText
 Contact Permission
 GUID
 Never Ask
-------------
 FriendlyTypeName
 URL Protocol
 UninstallID

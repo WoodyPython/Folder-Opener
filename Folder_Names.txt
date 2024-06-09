@@ -149,7 +149,6 @@ CI
 CMF
 Els
 Cryptography
------------
 Git Bash
 Git CMD
 PowerCfg
