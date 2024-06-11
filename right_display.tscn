@@ -70,12 +70,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/side_margin = 0
 theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_ll6c7")
-current_tab = 3
 clip_tabs = false
 all_tabs_in_front = true
 
 [node name="Upgrades" type="PanelContainer" parent="VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/TabContainer/Upgrades"]
@@ -272,6 +270,7 @@ button_pressed = true
 text = "Auto Complete"
 
 [node name="About Screen" type="PanelContainer" parent="VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TabContainer/About Screen"]
